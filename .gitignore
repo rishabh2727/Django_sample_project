@@ -1,0 +1,6 @@
+# We do not commit these files, contains sensitive information.
+venv/
+db.sqlite3
+.env
+__pycache__/
+*.pyc
