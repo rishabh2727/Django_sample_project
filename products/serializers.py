@@ -1,4 +1,4 @@
-from .models import Product, Category, Tag
+from .models import Item, Category, Tag
 from rest_framework import serializers
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -10,11 +10,11 @@ class TagSerializer(serializers.ModelSerializer):
     fields = ['id', 'name']
     
 
-# making the product serializer nested, so full details are returned.
-class ProductSerializer(serializers.ModelSerializer):
-    name = Product
-    category = CategorySerializer()
-    tags = TagSerializer()
+# making the item serializer nested, so full details are returned.
+class ItemSerializer(serializers.ModelSerializer):
+    name = Item
+    category = CategorySerializer(read_only = True)
+    tags = TagSerializer(many = True)
     fields = ['id','name', 'price', 'description']
 
 
