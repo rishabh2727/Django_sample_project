@@ -1,8 +1,8 @@
 from django.db import models
 
 
-# A category model/table for grouping the products into one category like Clothing etc. A product
-# can only have one category.
+# A category model/table for grouping the products into one category like Clothing etc.
+# A product can only have one category.
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
@@ -14,7 +14,8 @@ class Category(models.Model):
         return self.name
 
 
-# Tags are labels that can be added to products. One product can have multiple tags, even None.
+# Tags are labels that can be added to products. 
+# One product can have multiple tags, even None.
 class Tag(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
@@ -22,7 +23,8 @@ class Tag(models.Model):
         return self.name
 
 
-# product is the main model that users will search and filter. Used category and tags as foreign keys here.
+# product is the main model that users will search and filter. 
+# Used category and tags as foreign keys here.
 class Product(models.Model):
     name = models.CharField(max_length=150)
     price = models.DecimalField(max_digits=8, decimal_places=2)

@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from .models import Category, Product, Tag
 
+# makes the admin panel prettier, more useful.
 
 # adds categories to the admin page. we can search by the field, name.
 @admin.register(Category)
