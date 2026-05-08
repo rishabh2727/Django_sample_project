@@ -24,7 +24,6 @@ class Tag(models.Model):
 
 
 # product is the main model that users will search and filter. 
-# Used category and tags as foreign keys here.
 class Product(models.Model):
     name = models.CharField(max_length=150)
     price = models.DecimalField(max_digits=8, decimal_places=2)

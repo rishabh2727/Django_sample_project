@@ -41,9 +41,15 @@ python manage.py runserver
 - Product search page: `http://127.0.0.1:8000/`
 - Django admin: `http://127.0.0.1:8000/admin/`
 
-## Data Population
 
-Use the Django admin to create at least:
+## Populating the Database
+
+Data can be populated automatically using the management command.
+ 
+```bash
+python manage.py populate_data
+```
+, or manually using the Django admin to create at least:
 
 - 5 categories
 - 10 tags
