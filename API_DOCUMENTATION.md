@@ -2,32 +2,45 @@
 
 Base URL for local development:
 
-```text
 http://127.0.0.1:8000
-```
 
 ## Products
 
 ### List Products
 
-```http
 GET /api/products/
-```
+
+Returns a list of all products. Supports optional search and filtering via query parameters.
+
+### Query Parameters
+
+| Parameter  | Type     | Description                                      |
+|------------|----------|--------------------------------------------------|
+| search     | string   | Search products by name or description           |
+| category   | integer  | Filter products by category ID                   |
+| tags       | integer  | Filter products by tag ID (can pass multiple)    |
 
 ### Example Requests
 
-```http
-GET /api/products/?q=wireless
-GET /api/products/?category=1
-GET /api/products/?tags=2&tags=5
-GET /api/products/?q=wireless&category=1&tags=2
-```
+# Get all products
+GET /api/products/
 
-When multiple `tags` values are provided, the product must contain every selected tag.
+# Search by name or description
+GET /api/products/?search=wireless
+
+# Filter by category
+GET /api/products/?category=1
+
+# Filter by one or more tags
+GET /api/products/?tags=2&tags=5
+
+# Combine search and filters
+GET /api/products/?search=wireless&category=1&tags=2
+
+When multiple tags values are provided, products matching ANY of the selected tags are returned.
 
 ### Example Response
 
-```json
 [
   {
     "id": 1,
@@ -41,28 +54,26 @@ When multiple `tags` values are provided, the product must contain every selecte
     "tags": [
       {
         "id": 2,
-        "name": "Wireless"
+        "name": "wireless"
       },
       {
         "id": 5,
-        "name": "Sale"
+        "name": "sale"
       }
     ]
   }
 ]
-```
 
 ## Categories
 
 ### List Categories
 
-```http
 GET /api/categories/
-```
+
+Returns a list of all categories. Used to populate the category filter dropdown.
 
 ### Example Response
 
-```json
 [
   {
     "id": 1,
@@ -70,37 +81,34 @@ GET /api/categories/
   },
   {
     "id": 2,
-    "name": "Home"
+    "name": "Furniture"
   }
 ]
-```
 
 ## Tags
 
 ### List Tags
 
-```http
 GET /api/tags/
-```
+
+Returns a list of all tags. Used to populate the tag filter checkboxes.
 
 ### Example Response
 
-```json
 [
   {
     "id": 1,
-    "name": "New"
+    "name": "wireless"
   },
   {
     "id": 2,
-    "name": "Wireless"
+    "name": "portable"
   }
 ]
-```
 
 ## Status Codes
 
-- `200 OK`: Request completed successfully.
-
-
-
+| Code    | Meaning                        |
+|---------|--------------------------------|
+| 200 OK  | Request completed successfully |
+| 404     | Endpoint not found             |
