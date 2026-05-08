@@ -59,3 +59,11 @@ See `API_DOCUMENTATION.md` for endpoint details, query parameters, and example r
 
 - The project uses SQLite by default for simple local setup.
 
+## Technical Decisions
+- Used Django REST Framework with class based views for clean, 
+  readable API structure
+- Used select_related and prefetch_related to avoid N+1 queries
+- Chose vanilla JavaScript fetch() for the frontend to keep 
+  the separation between frontend and backend clear
+- Added a management command for easy database population
+

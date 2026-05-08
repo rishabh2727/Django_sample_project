@@ -47,12 +47,14 @@ class ProductListView(ListAPIView):
 
         #  filter products where the name or description contains the search word.
         # icontains means case insensitive so 'Keyboard' and 'keyboard' both match
-        # the | operator means OR, so it checks both fields
+        # the | operator means OR, so it checks all three fields.
         if search:
             queryset = queryset.filter(
                 description__icontains=search
             ) | queryset.filter(
                 name__icontains=search
+            ) | queryset.filter(
+                category__name__icontains=search
             )
 
         # user selected a category from the dropdown.

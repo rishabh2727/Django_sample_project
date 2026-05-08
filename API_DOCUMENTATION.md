@@ -4,6 +4,10 @@ Base URL for local development:
 
 http://127.0.0.1:8000
 
+## Populating the Database
+
+Data can be populated automatically using the management command python manage.py populate_data, or manually through the Django admin interface at /admin/
+
 ## Products
 
 ### List Products
