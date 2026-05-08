@@ -73,3 +73,7 @@ See `API_DOCUMENTATION.md` for endpoint details, query parameters, and example r
   the separation between frontend and backend clear
 - Added a management command for easy database population
 
+## AI Attribution
+
+AI assistance was used to reduce extra database hits by using select_related for categories and prefetch_related for tags. suggested to return product ordered by name.
+
