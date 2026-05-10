@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ProductListView, CategoryListView, TagListView, index
+from .views import ProductListView, CategoryListView, TagListView, ProductDetailView,product_detail,ProductNewView,index
 
 # URL patterns for the products app
 # these are included in the main market/urls.py with an empty prefix
@@ -15,4 +15,7 @@ urlpatterns = [
     path('api/products/', ProductListView.as_view(), name='product-list'),
     path('api/categories/', CategoryListView.as_view(), name='category-list'),
     path('api/tags/', TagListView.as_view(), name='tag-list'),
+    path('api/products/<int:pk>/', ProductDetailView.as_view(), name= 'single-product'),
+    path('api/products/<int:pk>/', product_detail, name = 'product-detail'),
+    path('api/products/create', ProductNewView.as_view(), name= 'create-product')
 ]

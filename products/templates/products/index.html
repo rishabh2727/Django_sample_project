@@ -31,10 +31,16 @@
             placeholder="Search by name or description..."
         />
 
+         <!--price filtering option-->
+         <input type = "number", id = "min_price", placeholder= "Enter min price"/>
+         <input type = "number", id="max_price", placeholder= "Enter max price"/>
+         
+
         <!-- Category Dropdown -->
         <select id="category-select">
             <option value="">All Categories</option>
         </select>
+
 
         <button onclick="applyFilters()">Search</button>
         <button onclick="clearFilters()">Clear</button>
@@ -58,7 +64,7 @@
             loadProducts();
         });
 
-        // xsLoad Categories into Dropdown 
+        // xsLoad Categories into Dropdown,
         async function loadCategories() {
             const response = await fetch('/api/categories/');
             const data = await response.json();
@@ -90,16 +96,22 @@
         }
 
         // Build URL and Load Products 
-        async function loadProducts(search = '', category = '', tags = []) {
+        async function loadProducts(search = '', category = '', tags = [], min_price='',max_price='') {
             // Build the URL with query parameters
             let url = '/api/products/?';
+
+            // backticks helps us to embed the variable insdie the string
+            // so here search, category, even the min-price and others are glued to the url
 
             if (search) url += `search=${search}&`;
             if (category) url += `category=${category}&`;
             tags.forEach(tag => url += `tags=${tag}&`);
+            if (min_price) url += `min_price=${min_price}&`;
+            if (max_price) url += `max_price=${max_price}&`;
 
             const response = await fetch(url);
             const data = await response.json();
+            console.log(data)
 
             displayProducts(data);
         }
@@ -137,8 +149,10 @@
             const category = document.getElementById('category-select').value;
             const tags = [...document.querySelectorAll('.tag-check:checked')]
                 .map(checkbox => checkbox.value);
+            const min_price = document.getElementById('min_price').value
+            const max_price = document.getElementById('max_price').value 
 
-            loadProducts(search, category, tags);
+            loadProducts(search, category, tags,min_price,max_price);
         }
 
         // Clear All Filters
@@ -147,6 +161,8 @@
             document.getElementById('category-select').value = '';
             document.querySelectorAll('.tag-check:checked')
                 .forEach(checkbox => checkbox.checked = false);
+            document.getElementById('min_price').value='';
+            document.getElementById('max_price').value='';
 
             loadProducts();
         }
