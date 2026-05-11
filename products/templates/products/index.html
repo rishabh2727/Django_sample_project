@@ -17,6 +17,9 @@
         #results-count { color: #666; margin-bottom: 16px; }
     </style>
 </head>
+{% comment %} 
+    I have simple html here, I will use getelementbyid and other dom methods to
+    add logic/data to the components. {% endcomment %}
 <body>
 
     <h1>Product Search</h1>
@@ -56,6 +59,13 @@
     <div id="results-count"></div>
     <div id="results-container"></div>
 
+    
+
+    {% comment %} firstly, it makes a fetch request to the correct api endpoint,
+    then we await the response and store the data in variable. 
+    now for each category, we have to create an element, and add value and textContent to it.
+    we keep appending that element created to the category dropdown html element.  {% endcomment %}
+
     <script>
         // Load categories, tags, and products when page opens
         document.addEventListener('DOMContentLoaded', () => {
@@ -65,6 +75,7 @@
         });
 
         // xsLoad Categories into Dropdown,
+
         async function loadCategories() {
             const response = await fetch('/api/categories/');
             const data = await response.json();
@@ -102,6 +113,8 @@
 
             // backticks helps us to embed the variable insdie the string
             // so here search, category, even the min-price and others are glued to the url
+            // once url is built, we make a request to that url, get the products
+            // and pass that data to the displayProducts function.
 
             if (search) url += `search=${search}&`;
             if (category) url += `category=${category}&`;
@@ -116,7 +129,7 @@
             displayProducts(data);
         }
 
-        // Display Products on Page 
+        // Display Products on Page, the data is passed as the paramter,
         function displayProducts(products) {
             const container = document.getElementById('results-container');
             const countEl = document.getElementById('results-count');
@@ -145,6 +158,14 @@
 
         // Apply Filters
         function applyFilters() {
+
+    // the search button has onclick = method, which will fire the function, once 
+    // button is clicked. It needs to load the results and display them.
+    // search button clicked -> applyfilters called (collects all elements input by
+    // user in one place and build the function paramters) -> 
+    // loadproducts(which will build the url) -> displayproducts
+    //  
+
             const search = document.getElementById('search-input').value;
             const category = document.getElementById('category-select').value;
             const tags = [...document.querySelectorAll('.tag-check:checked')]
