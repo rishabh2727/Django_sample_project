@@ -1,23 +1,24 @@
 from django.core.management.base import BaseCommand
 from products.models import Category, Tag, Product
 import random
-
+# this is the management script, run this with 
+# python manage.py populate_data
+# we extend the basecommand class here, we have a handle function
 class Command(BaseCommand):
     help = 'Populate database with sample data'
 
     def handle(self, *args, **kwargs):
-        # Clear existing data
+        # clear existing data
         Product.objects.all().delete()
         Tag.objects.all().delete()
         Category.objects.all().delete()
 
-        # Create Categories
-        categories = ['Electronics', 'Furniture', 'Office Supplies', 'Networking', 'Tools']
+        # create Categories
+        categories = ['Electronics', 'Furniture', 'Office Supplies', 'Networking', 'Tools','Misc']
         category_objects = []
         for name in categories:
             cat = Category.objects.create(name=name)
             category_objects.append(cat)
-            self.stdout.write(f'Created category: {name}')
 
         # Create Tags
         tags = ['wireless', 'portable', 'office', 'heavy-duty', 'budget',
@@ -26,17 +27,16 @@ class Command(BaseCommand):
         for name in tags:
             tag = Tag.objects.create(name=name)
             tag_objects.append(tag)
-            self.stdout.write(f'Created tag: {name}')
 
-        # Create Products
+        # create products here, which are list of dictionary items, that we use.
         products = [
-            ('Wireless Keyboard', 'A compact wireless keyboard for office use', 49.99, 'Electronics'),
-            ('Standing Desk', 'Adjustable standing desk for better posture', 299.99, 'Furniture'),
-            ('Ethernet Cable', 'High speed ethernet cable 10ft', 12.99, 'Networking'),
-            ('Power Drill', 'Cordless power drill with multiple bits', 89.99, 'Tools'),
-            ('Stapler', 'Heavy duty stapler for office use', 14.99, 'Office Supplies'),
-            ('Wireless Mouse', 'Ergonomic wireless mouse with long battery life', 39.99, 'Electronics'),
-            ('Office Chair', 'Comfortable mesh office chair', 199.99, 'Furniture'),
+            ('Wireless Keyboard', 'compact wireless keyboard ', 50, 'Electronics'),
+            ('Standing Desk', 'Adjustable standing desk for better posture', 21, 'Furniture'),
+            ('Ethernet Cable', 'High speed ethernet cable 10ft', 3, 'Networking'),
+            ('Power Drill', 'Cordless power drill with multiple bits', 20, 'Tools'),
+            ('Stapler', 'Heavy duty stapler for office use', 14, 'Office Supplies'),
+            ('Wireless Mouse', 'Ergonomic wireless mouse with long battery life', 35, 'Electronics'),
+            ('Office Chair', 'Comfortable mesh office chair', 199, 'Furniture'),
             ('Network Switch', '8 port gigabit network switch', 45.99, 'Networking'),
             ('Hammer', 'Steel hammer with rubber grip', 19.99, 'Tools'),
             ('Printer Paper', 'A4 printer paper 500 sheets', 9.99, 'Office Supplies'),
@@ -49,9 +49,14 @@ class Command(BaseCommand):
             ('Desk Lamp', 'LED desk lamp with adjustable brightness', 29.99, 'Furniture'),
             ('Cable Organizer', 'Cable management box for desk', 15.99, 'Office Supplies'),
             ('Laptop Stand', 'Adjustable aluminum laptop stand', 44.99, 'Electronics'),
-            ('Tape Measure', '25 foot retractable tape measure', 12.99, 'Tools'),
+            ('jacket', '', 45, 'Misc'),
+            ('towel', 'white towel for shower', 12, 'Misc'),
+            ('plates', 'dining plates', 12, 'Misc'),
+            ('pillows', '', 2.99, 'Misc')
         ]
 
+        # using loop to assign the dictionary elements to the objects created
+        # for catrgory and tags
         for name, description, price, category_name in products:
             category = Category.objects.get(name=category_name)
             product = Product.objects.create(
@@ -64,5 +69,3 @@ class Command(BaseCommand):
             random_tags = random.sample(tag_objects, random.randint(2, 3))
             product.tags.set(random_tags)
             self.stdout.write(f'Created product: {name}')
-
-        self.stdout.write(self.style.SUCCESS('Database populated successfully!'))
